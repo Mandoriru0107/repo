@@ -49,7 +49,8 @@ if [ $auth == "y" ] || [ $auth == "Y" ] || [ $auth == "yes" ] || [ $auth == "Yes
     sudo localectl set-locale LANG=ja_JP.UTF-8
 fi
 
-sudo ufw allow 22/tcp
+sudo ufw allow ${ssh_port:=22}/tcp
 sudo ufw logging off
+sudo ufw reload
 sudo ufw enable
 echo "Done"
