@@ -12,7 +12,7 @@ if [ $ssh == "y" ] || [ $ssh == "Y" ] || [ $ssh == "yes" ] || [ $ssh == "Yes" ];
     read auth
 #    echo "Do you want to change sshd port?(y|n)"
 #    read sshdportchange
-        if 
+#        if 
 fi
 echo "Do you want to change locale?(y|n)"
 read locale
