@@ -11,6 +11,8 @@ if [ $ssh == "y" ] || [ $ssh == "Y" ] || [ $ssh == "yes" ] || [ $ssh == "Yes" ];
     echo "Do you want to set ssh auth(publickey)(y|n)"   
     read auth
 fi
+echo "Do you want to change locale?(y|n)"
+read locale
 
 if [ $install == "y" ] || [ $install == "Y" ] || [ $install == "yes" ] || [ $install == "Yes" ]; then
     sudo pacman -S base-devel git wget vim cmake llvm clang go htop ufw
@@ -36,6 +38,14 @@ if [ $auth == "y" ] || [ $auth == "Y" ] || [ $auth == "yes" ] || [ $auth == "Yes
     sudo sed -e 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
     sudo systemctl restart sshd
 fi
+
+if [ $auth == "y" ] || [ $auth == "Y" ] || [ $auth == "yes" ] || [ $auth == "Yes" ]; then
+    sudo cp /etc/locale.gen ./backups/
+    sudo sed -e 's/#ja_JP.UTF-8 UTF-8/ja_JP.UTF-8 UTF-8/' /etc/locale.gen
+    sudo locale-gen
+    sudo localectl set-locale LANG=ja_JP.UTF-8
+fi
+
 sudo ufw allow 22/tcp
 sudo ufw logging off
 sudo ufw enable
