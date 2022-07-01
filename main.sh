@@ -8,8 +8,11 @@ read install
 echo "Do you want to set ssh?(y|n)"
 read ssh
 if [ $ssh == "y" ] || [ $ssh == "Y" ] || [ $ssh == "yes" ] || [ $ssh == "Yes" ]; then
-    echo "Do you want to set ssh auth(publickey)(y|n)"   
+    echo "Do you want to set ssh auth?(publickey)(y|n)"   
     read auth
+#    echo "Do you want to change sshd port?(y|n)"
+#    read sshdportchange
+        if 
 fi
 echo "Do you want to change locale?(y|n)"
 read locale
