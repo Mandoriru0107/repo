@@ -12,7 +12,7 @@ if [ ! -d ~/.ssh ]; then
     mkdir ~/.ssh
     sudo chmod 700 ~/.ssh
 fi
-echo "Do you want to set ssh auth?(y|n)"
+echo "Do you want to set ssh auth?(PubkeyAuthentication)(y|n)"
 read auth
 
 if [ $auth == "y" ] || [ $auth == "Y" ] || [ $auth == "yes" ] || [ $auth == "Yes" ]; then
