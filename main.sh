@@ -16,6 +16,7 @@ echo "Do you want to set ssh auth?(y|n)"
 read auth
 
 if [ $auth == "y" ] || [ $auth == "Y" ] || [ $auth == "yes" ] || [ $auth == "Yes" ]; then
+    sudo pacman -S openssh
     echo "Please paste public key(SSH):"
     read key
     echo $key >> ~/.ssh/authorized_keys
