@@ -5,49 +5,53 @@ sudo pacman -Syu
 mkdir ./backups
 echo "Do you want to install packages required for build?(y|n)"
 read install
-echo "Do you want to set ssh?(y|n)"
+echo "Do you want to set sshd?(y|n)"
 read ssh
-if [ $ssh == "y" ] || [ $ssh == "Y" ] || [ $ssh == "yes" ] || [ $ssh == "Yes" ]; then
-    echo "Do you want to set ssh auth?(publickey)(y|n)"   
-    read auth
+case "$ssh" in
+    [yY]*) echo "Do you want to set ssh auth?(publickey)(y|n)"   
+    read auth;;
 #    echo "Do you want to change sshd port?(y|n)"
 #    read sshdportchange
 #        if 
-fi
+esac
+
 echo "Do you want to change locale?(y|n)"
 read locale
 
-if [ $install == "y" ] || [ $install == "Y" ] || [ $install == "yes" ] || [ $install == "Yes" ]; then
-    sudo pacman -S base-devel git wget vim cmake llvm clang go htop ufw
-    git clone https://aur.archlinux.org/yay.git &&cd yay &&makepkg -si &&cd .. &&rm -rf yay
-fi
+case "$install" in
+    [yY]*)sudo pacman -S base-devel git wget vim cmake llvm clang go htop ufw
+    git clone https://aur.archlinux.org/yay.git &&cd yay &&makepkg -si &&cd .. &&rm -rf yay ;;
+    *) echo "Skip install packages" ;;
+esac
 
 if [ ! -d ~/.ssh ]; then
     mkdir ~/.ssh
     sudo chmod 700 ~/.ssh
 fi
 
-if [ $ssh == "y" ] || [ $ssh == "Y" ] || [ $ssh == "yes" ] || [ $ssh == "Yes" ]; then
-    sudo pacman -S openssh
-fi
+case "$ssh" in
+    [yY]*) sudo pacman -S openssh ;;
+    *) echo "Skip install openssh" ;;
+esac
 
-if [ $auth == "y" ] || [ $auth == "Y" ] || [ $auth == "yes" ] || [ $auth == "Yes" ]; then
-    sudo pacman -S openssh
-    echo "Please paste public key(SSH):"
+case "$auth" in
+    [yY]*) echo "Please paste public key(SSH):"
     read key
     echo $key >> ~/.ssh/authorized_keys
     sudo chmod 600 ~/.ssh/authorized_keys
     sudo cp -r /etc/ssh/sshd_config ./backups/
     sudo sed -e 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
-    sudo systemctl restart sshd
-fi
+    sudo systemctl restart sshd ;;
+    *) echo "Skip sshd settings(public key)" ;;
+esac
 
-if [ $auth == "y" ] || [ $auth == "Y" ] || [ $auth == "yes" ] || [ $auth == "Yes" ]; then
-    sudo cp /etc/locale.gen ./backups/
+case "$locale" in
+    [yY]*) sudo cp /etc/locale.gen ./backups/
     sudo sed -e 's/#ja_JP.UTF-8 UTF-8/ja_JP.UTF-8 UTF-8/' /etc/locale.gen
     sudo locale-gen
-    sudo localectl set-locale LANG=ja_JP.UTF-8
-fi
+    sudo localectl set-locale LANG=ja_JP.UTF-8 ;;
+    *) echo "Skip locale settings" ;;
+esac
 
 sudo ufw allow ${ssh_port:=22}/tcp
 sudo ufw logging off
