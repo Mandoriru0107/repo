@@ -10,9 +10,10 @@ read ssh
 case "$ssh" in
     [yY]*) echo "Do you want to set ssh auth?(publickey)(y|n)"   
     read auth;;
-#    echo "Do you want to change sshd port?(y|n)"
-#    read sshdportchange
-#        if 
+esac
+case "$ssh" in
+    [yY]*) echo "Do you want to change ssh port?(y|n)"
+    read sshdport;;
 esac
 
 echo "Do you want to change locale?(y|n)"
@@ -40,7 +41,8 @@ case "$auth" in
     echo $key >> ~/.ssh/authorized_keys
     sudo chmod 600 ~/.ssh/authorized_keys
     sudo cp -r /etc/ssh/sshd_config ./backups/
-    sudo sed -e 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+    passwdauth = "`sudo grep PasswordAuthentication /etc/ssh/sshd_config`"
+    sudo sed -i 's/"$passwdauth"/PasswordAuthentication no/' /etc/ssh/sshd_config
     sudo systemctl restart sshd ;;
     *) echo "Skip sshd settings(public key)" ;;
 esac
@@ -51,6 +53,11 @@ case "$locale" in
     sudo locale-gen
     sudo localectl set-locale LANG=ja_JP.UTF-8 ;;
     *) echo "Skip locale settings" ;;
+esac
+
+case "$sshdport" in
+    [yY]*) echo "Please input sshd port number"
+    read ssh_port;;
 esac
 
 sudo ufw allow ${ssh_port:=22}/tcp
