@@ -49,7 +49,7 @@ esac
 
 case "$locale" in
     [yY]*) sudo cp /etc/locale.gen ./backups/
-    sudo sed -e 's/#ja_JP.UTF-8 UTF-8/ja_JP.UTF-8 UTF-8/' /etc/locale.gen
+    sudo sed -i 's/#ja_JP.UTF-8 UTF-8/ja_JP.UTF-8 UTF-8/' /etc/locale.gen
     sudo locale-gen
     sudo localectl set-locale LANG=ja_JP.UTF-8 ;;
     *) echo "Skip locale settings" ;;
