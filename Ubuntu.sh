@@ -37,10 +37,11 @@ case "$sshd_set_up" in
         read auth
         echo "$auth" > ~/.ssh/authorized_keys ;;
     esac
-    passwdauth="`sudo grep PasswordAuthentication /etc/ssh/sshd_config`"
-    sudo sed -i 's/"$passwdauth"/PasswordAuthentication no' /etc/ssh/sshd_config ;;
+    
+    sudo sed -i 's/"PasswordAuthentication yes"/PasswordAuthentication no' /etc/ssh/sshd_config ;;
 esac
 #コードが長い&見にくいので一旦切ります
+
 case "$sshd_set_up" in
     echo "Do you want to change sshd port?(use ufw command)(y|n)"
     echo "If you want to use anther it,you must select n"
@@ -54,5 +55,4 @@ case "$sshd_set_up" in
         sudo ufw reload ;;
     esac ;;
 esac
-
 echo "Done!"
