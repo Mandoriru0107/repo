@@ -43,7 +43,7 @@ esac
 #コードが長い&見にくいので一旦切ります
 
 case "$sshd_set_up" in
-    echo 'Do you want to change sshd port?(use ufw command)(y|n)'
+    [Yy]*) echo "Do you want to change sshd port?(use ufw command)(y|n)"
     echo "If you want to use anther it,you must select n"
     read change_sshd_port
     case "$change_sshd_port" in
