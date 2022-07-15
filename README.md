@@ -1,4 +1,4 @@
-# Linux_Set_Up
+# Set up
 Linuxをセットアップする為のシェルスクリプト。
 現在、Arch Linux系に対応しています。Ubuntu系にも対応予定。
 # ⚠︎注意
