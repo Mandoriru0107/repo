@@ -11,7 +11,7 @@ case '@yn' in
 esac
 
 sudo apt -y install build-essential libreadline-dev libssl-dev libncurses-dev libz-dev make gcc git
-git clone https://github.com/Mandoriru0107/SoftEtherVPN_Stable.git
+git clone https://github.com/SoftEtherVPN/SoftEtherVPN_Stable
 cd SoftEtherVPN_Stable
 ./configure
 make -j2
