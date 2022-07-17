@@ -42,6 +42,6 @@ Type=forking
 RestartSec=3s
 
 [Install]
-WantedBy=multi-user.target" > ./vpnserver.Service
+WantedBy=multi-user.target" > ./vpnserver.service
 sudo mv vpnserver.service /etc/systemd/system/
 sudo systemctl enable vpnserver.service --now
