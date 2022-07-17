@@ -6,7 +6,7 @@ echo "実行しますか？(y|n)"
 read yn
 case '@yn' in
     [yY]*) echo "実行します…" ;;
-    *) echo "中止します。"
+    [nN]*) echo "中止します。"
     exit 1 ;;
 esac
 
